@@ -4,8 +4,8 @@ from pymongo import MongoClient
 class DbConection():
 
 #  Constructor de coneccion a base de datos
-    def __init__(self, database, password):
-        self.client = MongoClient("mongodb+srv://RICA:"+password+"@cluster0-hgvcm.mongodb.net/test?retryWrites=true&w=majority")
+    def __init__(self, user, database, password):
+        self.client = MongoClient("mongodb+srv://"+user+":"+password+"@cluster0-2ikpa.mongodb.net/"+database+"?retryWrites=true&w=majority")
         self.db = self.client.get_database(database)
 
 #   Obtiene todos los documentos de una coleccion dada
@@ -102,9 +102,9 @@ jsonOne = {
 collection = 'applicants'
 
 #instanciacion de objetos dao y prueba de funcionamiento
-instance = DbConection('RicaDb','*Perceptio2020')
+#instance = DbConection('','RicaDb','*Perceptio2020')
 #Lectura a lista de aplications
-instance.getAll(collection)
+#instance.getAll(collection)
 #Insercion a colection a base de datos
 #instance.insertMany(collect, json)
 #Insertar un registro
