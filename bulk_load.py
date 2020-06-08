@@ -31,8 +31,7 @@ class BulkLoad():
             "content": ""
         }
         data = []
-        
-        for i in range(3, self.rows):
+        for i in range(2, self.rows):
             row = self.file.read(i)
             try:
                 json["cedula"] = int(row[0])
@@ -44,12 +43,12 @@ class BulkLoad():
                 try:
                     json["telefonos"] = str(int(str(row[6]).replace(" ",''))) # Lista?
                 except ValueError:
-                    json["telefonos"] = int(row[6])
-                else:
-                    str(row[6])
+                    try:
+                        json["telefonos"] = int(row[6])
+                    except ValueError:
+                        str(row[6])
                 json["especialidades"] = row[7]
-                json["cv"] = "http://192.168.1.122:3100/api/cv/"+row[5]+".pdf/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBZG1pbiIsImlhdCI6OTk5OTk5OTk5OSwiZXhwIjo5OTk5OTk5OTk5fQ.QbQCFQNCnf43SMztVVk6HeRPXvp1jun4hfUx5kBZzfI"
-
+                json["cv"] = "http://192.168.1.122:3100/api/cv/"+row[5].strip()+".pdf/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBZG1pbiIsImlhdCI6OTk5OTk5OTk5OSwiZXhwIjo5OTk5OTk5OTk5fQ.QbQCFQNCnf43SMztVVk6HeRPXvp1jun4hfUx5kBZzfI"
                 json["comentarios"] = row[9]
                 json["nivel"] = row[10]
                 json["calificacion"] = row[11]
@@ -60,8 +59,10 @@ class BulkLoad():
                 json["ubicacion"] = row[16]
             except ValueError:
                 continue
-            break
-        return json
+            data.append(json)
+            json = {}
+
+        return data
             #data.append(json)
         
         #return data

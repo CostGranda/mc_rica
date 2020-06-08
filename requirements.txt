@@ -1,3 +1,4 @@
 excel
 pymongo
 dnspython
+python-dotenv
