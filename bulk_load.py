@@ -31,6 +31,7 @@ class BulkLoad():
             "content": ""
         }
         data = []
+        filename = ""
         for i in range(2, self.rows):
             row = self.file.read(i)
             try:
@@ -48,7 +49,11 @@ class BulkLoad():
                     except ValueError:
                         str(row[6])
                 json["especialidades"] = row[7]
-                json["cv"] = "http://190.248.92.106:3100/api/cv/"+row[5].strip()+".pdf/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBZG1pbiIsImlhdCI6OTk5OTk5OTk5OSwiZXhwIjo5OTk5OTk5OTk5fQ.QbQCFQNCnf43SMztVVk6HeRPXvp1jun4hfUx5kBZzfI"
+                if not json["cedula"]:
+                    filename = row[5].strip()
+                else:
+                    filename = json["cedula"]
+                json["cv"] = "http://190.248.92.106:3100/api/cv/"+filename+".pdf/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBZG1pbiIsImlhdCI6OTk5OTk5OTk5OSwiZXhwIjo5OTk5OTk5OTk5fQ.QbQCFQNCnf43SMztVVk6HeRPXvp1jun4hfUx5kBZzfI"
                 json["comentarios"] = row[9]
                 json["nivel"] = row[10]
                 json["calificacion"] = row[11]
